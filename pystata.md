@@ -1,8 +1,8 @@
 # Stata Python integration
 
 ##  [Hua Peng@StataCorp][hpeng]
-### 2019 Stata User Conference Chicago 
-### [https://tinyurl.com/y3h35tt3](https://huapeng01016.github.io/chicago19/)
+### 2021 JSM 
+### [https://huapeng01016.github.io/2021-jsm/](https://huapeng01016.github.io/2021-jsm/)
 
 # Stata 16 introduces tight integration with Python
 
@@ -11,6 +11,13 @@
 - Define and use Python routines in do-files 
 - Define and use Python routines in ado-files
 - Interact with Stata through Stata Function Interface (sfi)
+
+# Stata 17 introduces calling Stata from Python
+
+- Call Stata from Python 
+- Use Stata from Jupyter Notebook with magic commands
+- Use Stata from Python scripts with Stata Function Interface (sfi)  
+
 
 # Use Python interactively
 

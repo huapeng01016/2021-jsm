@@ -1,13 +1,13 @@
 /* 
 	Author: 	Hua Peng
-	Date:	Jun 17, 2019
-	Purpose:	Build reveal.js slides deck for 2019 Chicago
+	Date:		Aug 03, 2021
+	Purpose:	Build reveal.js slides deck for 2021 JSM
 */
 
 local path = ""
 if "`c(os)'" == "MacOSX" {
-	dynpandoc stpython.md, 	/// 
-		sav(index.html)	/// 
+	dynpandoc pystata.md, 	/// 
+		sav(pystata.html)	/// 
 		replace 	/// 
 		to(revealjs) 	/// 
 		path(/Users/hpeng01016/anaconda3/bin/pandoc)	///		
@@ -18,8 +18,8 @@ if "`c(os)'" == "MacOSX" {
 		)
 }
 else {
-	dynpandoc stpython.md, 	/// 
-		sav(index.html)	/// 
+	dynpandoc pystata.md, 	/// 
+		sav(pystata.html)	/// 
 		replace 	/// 
 		to(revealjs) 	/// 
 		pargs(-s --template=revealjs.html  	/// 
