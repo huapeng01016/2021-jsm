@@ -1,3 +1,2 @@
-# Software Demostration talk for 2021 JSM
-
-We show Stata integration with Python in this talk.
+# chicago19
+Talk at Stata User Conference Chicago 2019 
