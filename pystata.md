@@ -18,6 +18,14 @@
 - Use Stata from Jupyter Notebook with magic commands
 - Use Stata from Python scripts with Stata Function Interface (sfi)  
 
+# Calling Stata from Jupyter Notebook
+
+[An example/](./jupyter_stata.html)
+
+- Setup Stata
+- Use Stata magic commands
+
+
 
 # Use Python interactively
 

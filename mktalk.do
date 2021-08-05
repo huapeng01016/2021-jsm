@@ -7,7 +7,7 @@
 local path = ""
 if "`c(os)'" == "MacOSX" {
 	dynpandoc pystata.md, 	/// 
-		sav(pystata.html)	/// 
+		sav(index.html)	/// 
 		replace 	/// 
 		to(revealjs) 	/// 
 		path(/Users/hpeng01016/anaconda3/bin/pandoc)	///		
@@ -19,7 +19,7 @@ if "`c(os)'" == "MacOSX" {
 }
 else {
 	dynpandoc pystata.md, 	/// 
-		sav(pystata.html)	/// 
+		sav(index.html)	/// 
 		replace 	/// 
 		to(revealjs) 	/// 
 		pargs(-s --template=revealjs.html  	/// 
