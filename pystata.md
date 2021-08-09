@@ -6,17 +6,15 @@
 
 # Stata 16 introduces tight integration with Python
 
-- Embed and execute Python code 
 - Use Python interactively
-- Define and use Python routines in do-files 
 - Define and use Python routines in ado-files
-- Interact with Stata through Stata Function Interface (sfi)
+- Interact with Stata through [Stata Function Interface (sfi)](https://www.stata.com/python/api17/) 
 
 # Stata 17 introduces calling Stata from Python
 
-- Call Stata from Python 
 - Use Stata from Jupyter Notebook with magic commands
-- Use Stata from Python scripts with Stata Function Interface (sfi)  
+- Use Stata from Python scripts with Stata API   
+- More information at [https://www.stata.com/python/pystata/](https://www.stata.com/python/pystata/)
 
 # Call Stata from Jupyter Notebook
 
