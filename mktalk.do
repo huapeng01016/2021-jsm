@@ -23,7 +23,6 @@ else {
 		replace 	/// 
 		to(revealjs) 	/// 
 		pargs(-s --template=revealjs.html  	/// 
-		--self-contained	/// 
 		--section-divs	/// 
 		--variable theme="stata"	/// 
 		)
