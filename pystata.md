@@ -176,7 +176,7 @@ end
 
 ## Animation ([do-file](./stata/gif3d.do))
 
-![sandstone gif](./sandstone.gif)
+![sandstone gif](./stata/sandstone.gif)
 
 
 # Support Vector Machine (SVM)
