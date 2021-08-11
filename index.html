@@ -84,15 +84,14 @@
 <h1>Call Stata from Jupyter Notebook</h1>
 <ul>
 <li><a href="./jupyter_stata.html">An example</a> of calling Stata from Jupyter Notebook.</li>
-<li>The soure <a href="./jupyter_stata.ipynb">notebook jupyter_stata.ipynb</a></li>
+<li>The source <a href="./jupyter_stata.ipynb">notebook jupyter_stata.ipynb</a></li>
 </ul>
 </section>
 <section id="call-stata-from-python-scripts" class="slide level1">
 <h1>Call Stata from Python Scripts</h1>
 <ul>
 <li>Call Stata using pystata API</li>
-<li><a href="./src/did.py">An example</a></li>
-<li><a href="./spyder_stata.html">Output</a> produced from did.py</li>
+<li>An example <a href="./src/did.py">did.py</a></li>
 <li>More information at <a href="https://www.stata.com/python/pystata/api.html">https://www.stata.com/python/pystata/api.html</a></li>
 </ul>
 </section>
@@ -140,8 +139,8 @@ Hello World!
 ------------------------------------------------------------------------------
 </code></pre>
 </section>
-<section id="draw-suface-plot" class="level2">
-<h2>Draw suface plot</h2>
+<section id="draw-surface-plot" class="level2">
+<h2>Draw surface plot</h2>
 <p>We use a triangular mesh to produce the graph.</p>
 <pre><code>python:
 ax = plt.axes(projection=&#39;3d&#39;)
@@ -157,8 +156,8 @@ end</code></pre>
 <img data-src="sandstone.png" title="sandstone.png" alt="sandstone image" /><figcaption aria-hidden="true">sandstone image</figcaption>
 </figure>
 </section>
-<section id="change-color-map-and-view-anagle" class="level2">
-<h2>Change color map and view anagle</h2>
+<section id="change-color-map-and-view-angle" class="level2">
+<h2>Change color map and view angle</h2>
 <pre><code>python:
 ax.plot_trisurf(D[:,0], D[:,1], D[:,2], 
     cmap=plt.cm.Spectral, edgecolor=&#39;none&#39;)
@@ -272,20 +271,14 @@ def dosvmpredict2(predict, select):
     
 end</code></pre>
 </section>
-</section>
-<section id="pass-python-object-between-ado-files" class="slide level1">
-<h1>Pass Python object between ado files</h1>
-<section id="section" class="level2">
-<h2></h2>
+<section id="pass-python-object-between-ado-files" class="level2">
+<h2>Pass Python object between ado files</h2>
 <p>In <a href="./stata/pysvm2.ado">pysvm2.ado</a> ado code:</p>
 <pre><code>...
 import __main__ 
 ...
 __main__.svc_clf = svc_clf
 ...</code></pre>
-</section>
-<section id="section-1" class="level2">
-<h2></h2>
 <p>To access <strong>svc_clf</strong> in Python routines in ado files:</p>
 <pre><code>...
 from __main__ import svc_clf
@@ -321,14 +314,12 @@ Car origin |  Domestic    Foreign |     Total
 <img data-src="./src/words.png" title="words.png" alt="Comments:hpeng@stata.com" /><figcaption aria-hidden="true">Comments:hpeng@stata.com</figcaption>
 </figure>
 </section>
-<section id="post-credits" class="slide level1">
-<h1>Post-credits…</h1>
+<section id="references" class="slide level1">
+<h1>References</h1>
 <ul>
-<li><a href="https://www.stata.com/python/api16/">sfi details and examples</a></li>
-<li><a href="https://www.stata.com/manuals/ppython.pdf">Stata Python documentation</a></li>
-<li><a href="https://www.stata.com/new-in-stata/python-integration/">Stata Python integration</a></li>
-<li>The talk is made with <a href="https://www.stata.com/features/overview/markdown/">Stata markdown</a> and <a href="https://ideas.repec.org/c/boc/bocode/s458455.html">dynpandoc</a></li>
-<li><a href="./stata/words.do">wordcloud do-file</a></li>
+<li>[Stata Python][https://www.stata.com/python/]</li>
+<li><a href="https://www.stata.com/python/pystata/">PyStata</a></li>
+<li><a href="https://www.stata.com/python/api17/">SFI</a></li>
 </ul>
 </section>
 </div>

@@ -19,13 +19,12 @@
 # Call Stata from Jupyter Notebook
 
 - [An example](./jupyter_stata.html) of calling Stata from Jupyter Notebook.
-- The soure [notebook jupyter_stata.ipynb](./jupyter_stata.ipynb)
+- The source [notebook jupyter_stata.ipynb](./jupyter_stata.ipynb)
 
 # Call Stata from Python Scripts 
 
 - Call Stata using pystata API
-- [An example](./src/did.py)
-- [Output](./spyder_stata.html) produced from did.py
+- An example [did.py](./src/did.py)
 - More information at [https://www.stata.com/python/pystata/api.html](https://www.stata.com/python/pystata/api.html)
 
 # Call Python from Stata
@@ -73,7 +72,7 @@ end
 <</dd_do>>
 ~~~~
 
-## Draw suface plot
+## Draw surface plot
 
 We use a triangular mesh to produce the graph.   
 
@@ -102,7 +101,7 @@ end
 
 ![sandstone image](sandstone.png "sandstone.png")
 
-## Change color map and view anagle
+## Change color map and view angle
 
 ~~~~
 python:
@@ -231,9 +230,7 @@ def dosvmpredict2(predict, select):
 end
 ~~~~
 
-# Pass Python object between ado files
-
-##
+## Pass Python object between ado files
 
 In [pysvm2.ado](./stata/pysvm2.ado) ado code:
 
@@ -245,7 +242,6 @@ __main__.svc_clf = svc_clf
 ...
 ~~~~
 
-## 
 To access **svc_clf** in Python routines in ado files: 
 
 ~~~~
@@ -282,15 +278,10 @@ tabulate foreign for2, nokey
 
 ![Comments:hpeng@stata.com](./src/words.png "words.png")
 
-# Post-credits...
+# References
 
-- [sfi details and examples][sfi] 
-- [Stata Python documentation][P python]
-- [Stata Python integration](https://www.stata.com/new-in-stata/python-integration/)
-- The talk is made with [Stata markdown](https://www.stata.com/features/overview/markdown/) and [dynpandoc](https://ideas.repec.org/c/boc/bocode/s458455.html)
-- [wordcloud do-file](./stata/words.do)
-
+- [Stata Python][https://www.stata.com/python/]
+- [PyStata](https://www.stata.com/python/pystata/)
+- [SFI](https://www.stata.com/python/api17/)
 
 [hpeng]: hpeng@stata.com
-[sfi]: https://www.stata.com/python/api16/
-[P python]:https://www.stata.com/manuals/ppython.pdf
