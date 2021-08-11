@@ -23,7 +23,7 @@ if Platform.isWindows():
 	matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 
-plt.imshow(wordcloud)
+plt.imshow(wordcloud, interpolation='bilinear')
 plt.axis("off")
 plt.savefig("words.png")
 

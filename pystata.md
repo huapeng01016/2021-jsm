@@ -242,6 +242,7 @@ __main__.svc_clf = svc_clf
 ...
 ~~~~
 
+## 
 To access **svc_clf** in Python routines in ado files: 
 
 ~~~~
@@ -274,14 +275,14 @@ tabulate foreign for2, nokey
 <</dd_do>>
 ~~~~
 
-# Thanks!
-
-![Comments:hpeng@stata.com](./src/words.png "words.png")
-
 # References
 
-- [Stata Python][https://www.stata.com/python/]
-- [PyStata](https://www.stata.com/python/pystata/)
-- [SFI](https://www.stata.com/python/api17/)
+- [Stata Python](https://www.stata.com/python/)
+- [pystata](https://www.stata.com/python/pystata/)
+- [sfi](https://www.stata.com/python/api17/)
+
+# Thanks!
+
+![https://github.com/huapeng01016/2021-jsm](./stata/words.png)
 
 [hpeng]: hpeng@stata.com
