@@ -1,6 +1,6 @@
 # Setup Stata from within Python
 import stata_setup
-stata_setup.config("C:/Program Files/Stata17", "se")
+stata_setup.config("C:/Program Files/Stata17", "mp")
 
 # Import the json file into a Python dataframe
 import urllib.request, json 

@@ -67,7 +67,7 @@
 <h1>Stata 16 introduces tight integration with Python</h1>
 <ul>
 <li>Use Python interactively</li>
-<li>Define and use Python routines in ado-files</li>
+<li>Define and use Python routines in do and ado files</li>
 <li>Interact with Stata through <a href="https://www.stata.com/python/api17/">Stata Function Interface (sfi)</a></li>
 </ul>
 </section>
@@ -82,59 +82,19 @@
 </section>
 <section id="call-stata-from-jupyter-notebook" class="slide level1">
 <h1>Call Stata from Jupyter Notebook</h1>
-<p><a href="./jupyter_stata.html">An example/</a> of calling Stata from Jupyter Notebook using Use Stata magic commands.</p>
-<p>More details can be found at <a href="https://www.stata.com/python/pystata/">https://www.stata.com/python/pystata/</a></p>
+<ul>
+<li><a href="./jupyter_stata.html">An example</a> of calling Stata from Jupyter Notebook.</li>
+<li>The soure <a href="./jupyter_stata.ipynb">notebook jupyter_stata.ipynb</a></li>
+</ul>
 </section>
 <section id="call-stata-from-python-scripts" class="slide level1">
 <h1>Call Stata from Python Scripts</h1>
-<pre><code># Setup Stata from within Python
-import stata_setup
-stata_setup.config(&quot;C:/Program Files/Stata17&quot;, &quot;se&quot;)
-
-# Import the json file into a Python dataframe
-import urllib.request, json 
-from pandas.io.json import json_normalize
-
-with urllib.request.urlopen(&quot;https://www.stata.com/new-in-stata/pystata/did.json&quot;) as url:
-    data = json.loads(url.read().decode())
-data = json_normalize(data, &#39;records&#39;, [&#39;hospital_id&#39;, &#39;month&#39;])
-
-# Load Python dataframe into Stata
-from pystata import stata
-stata.pdataframe_to_data(data, True)
-
-# Run block of Stata code 
-stata.run(&#39;&#39;&#39;
-    destring satisfaction_score, replace
-    destring hospital_id, replace
-    destring month, replace
-
-    gen proc = 0
-    replace proc = 1 if procedure == &quot;New&quot;
-    label define procedure 0 &quot;Old&quot; 1 &quot;New&quot;
-    drop procedure
-    rename proc procedure
-    label value procedure procedure
-    &#39;&#39;&#39;, quietly=True)
-
-# Run Stata commands in Python
-stata.run(&#39;&#39;&#39;
-        didregress (satisfaction_score) (procedure), ///
-                group(hospital_id) time(month)
-        &#39;&#39;&#39;, echo=True)
-
-# Load Stata saved results to Python
-r = stata.get_return()[&#39;r(table)&#39;]
-
-# Use them in Python
-print(&quot;\n&quot;)
-print(&quot;The treatment hospitals had a %5.2f-point increase.&quot; % (r[0][0]), end=&quot; &quot;)
-print(&quot;The result is with 95%% confidence interval [%5.2f, %5.2f].&quot; % (r[4][0], r[5][0]))
-
-# Generate Stata graph in Python
-stata.run(&quot;estat trendplots&quot;, echo=True)
-stata.run(&quot;graph export did.svg, replace&quot;, quietly=True)</code></pre>
-<p><a href="./spyder_stata.html">Output</a> produced from did.py in Spyder.</p>
+<ul>
+<li>Call Stata using pystata API</li>
+<li><a href="./src/did.py">An example</a></li>
+<li><a href="./spyder_stata.html">Output</a> produced from did.py</li>
+<li>More information at <a href="https://www.stata.com/python/pystata/api.html">https://www.stata.com/python/pystata/api.html</a></li>
+</ul>
 </section>
 <section id="call-python-from-stata" class="slide level1">
 <h1>Call Python from Stata</h1>
@@ -221,82 +181,6 @@ end</code></pre>
 </section>
 <section id="support-vector-machine-svm" class="slide level1">
 <h1>Support Vector Machine (SVM)</h1>
-<section id="pysvm-ado-file" class="level2">
-<h2><strong>pysvm</strong> (<a href="./stata/pysvm.ado">ado file</a>)</h2>
-<pre><code>program pysvm
-    version 16
-    syntax varlist, predict(name)
-    gettoken label feature : varlist
-    python: dosvm(&quot;`label&#39;&quot;, &quot;`feature&#39;&quot;, &quot;`predict&#39;&quot;)
-end</code></pre>
-</section>
-<section id="python-routine-in-ado-file" class="level2">
-<h2>Python routine in <a href="./stata/pysvm.ado">ado file</a></h2>
-<pre><code>python:
-from sfi import Data
-import numpy as np
-from sklearn.svm import SVC
-
-def dosvm(label, features, predict):
-    X = np.array(Data.get(features))
-    y = np.array(Data.get(label))
-
-    svc_clf = SVC(gamma=&#39;auto&#39;)
-    svc_clf.fit(X, y)
-
-    y_pred = svc_clf.predict(X)
-
-    Data.addVarByte(predict)
-    Data.store(predict, None, y_pred)
-
-end</code></pre>
-</section>
-<section id="test-on-auto-dataset" class="level2">
-<h2>Test on <strong>auto</strong> dataset</h2>
-<pre><code>. sysuse auto
-(1978 automobile data)
-
-. pysvm foreign mpg price, predict(for2)
-</code></pre>
-</section>
-<section id="compare" class="level2">
-<h2>Compare</h2>
-<pre><code>. label values for2 origin
-
-. tabulate foreign for2, nokey
-
-           |         for2
-Car origin |  Domestic    Foreign |     Total
------------+----------------------+----------
-  Domestic |        52          0 |        52 
-   Foreign |         0         22 |        22 
------------+----------------------+----------
-     Total |        52         22 |        74 
-</code></pre>
-</section>
-<section id="upgrade" class="level2">
-<h2>Upgrade</h2>
-<pre><code>. pysvm2 foreign mpg price if runiform() &lt;= 0.2
-note: training finished successfully
-
-. pysvm2predict for2
-</code></pre>
-</section>
-<section id="output-2" class="level2">
-<h2>Output</h2>
-<pre><code>. label values for2 origin
-
-. tabulate foreign for2, nokey
-
-           |         for2
-Car origin |  Domestic    Foreign |     Total
------------+----------------------+----------
-  Domestic |        52          0 |        52 
-   Foreign |        16          6 |        22 
------------+----------------------+----------
-     Total |        68          6 |        74 
-</code></pre>
-</section>
 <section id="train-program-pysvm2.ado" class="level2">
 <h2>Train program (<a href="./stata/pysvm2.ado">pysvm2.ado</a>)</h2>
 <pre><code>program pysvm2
@@ -407,11 +291,34 @@ __main__.svc_clf = svc_clf
 from __main__ import svc_clf
 ...</code></pre>
 </section>
+<section id="test-on-auto-dataset" class="level2">
+<h2>Test on <strong>auto</strong> dataset</h2>
+<pre><code>. pysvm2 foreign mpg price if runiform() &lt;= 0.2
+note: training finished successfully
+
+. pysvm2predict for2
+</code></pre>
+</section>
+<section id="output-2" class="level2">
+<h2>Output</h2>
+<pre><code>. label values for2 origin
+
+. tabulate foreign for2, nokey
+
+           |         for2
+Car origin |  Domestic    Foreign |     Total
+-----------+----------------------+----------
+  Domestic |        52          0 |        52 
+   Foreign |        16          6 |        22 
+-----------+----------------------+----------
+     Total |        68          6 |        74 
+</code></pre>
+</section>
 </section>
 <section id="thanks" class="slide level1">
 <h1>Thanks!</h1>
 <figure>
-<img data-src="words.png" title="words.png" alt="Comments:hpeng@stata.com" /><figcaption aria-hidden="true">Comments:hpeng@stata.com</figcaption>
+<img data-src="./src/words.png" title="words.png" alt="Comments:hpeng@stata.com" /><figcaption aria-hidden="true">Comments:hpeng@stata.com</figcaption>
 </figure>
 </section>
 <section id="post-credits" class="slide level1">

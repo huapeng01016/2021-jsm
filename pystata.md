@@ -7,7 +7,7 @@
 # Stata 16 introduces tight integration with Python
 
 - Use Python interactively
-- Define and use Python routines in ado-files
+- Define and use Python routines in do and ado files
 - Interact with Stata through [Stata Function Interface (sfi)](https://www.stata.com/python/api17/) 
 
 # Stata 17 introduces calling Stata from Python
@@ -18,64 +18,15 @@
 
 # Call Stata from Jupyter Notebook
 
-[An example/](./jupyter_stata.html) of calling Stata from Jupyter Notebook using 
-Use Stata magic commands.
-
-More details can be found at [https://www.stata.com/python/pystata/](https://www.stata.com/python/pystata/)
+- [An example](./jupyter_stata.html) of calling Stata from Jupyter Notebook.
+- The soure [notebook jupyter_stata.ipynb](./jupyter_stata.ipynb)
 
 # Call Stata from Python Scripts 
 
-~~~
-# Setup Stata from within Python
-import stata_setup
-stata_setup.config("C:/Program Files/Stata17", "se")
-
-# Import the json file into a Python dataframe
-import urllib.request, json 
-from pandas.io.json import json_normalize
-
-with urllib.request.urlopen("https://www.stata.com/new-in-stata/pystata/did.json") as url:
-    data = json.loads(url.read().decode())
-data = json_normalize(data, 'records', ['hospital_id', 'month'])
-
-# Load Python dataframe into Stata
-from pystata import stata
-stata.pdataframe_to_data(data, True)
-
-# Run block of Stata code 
-stata.run('''
-    destring satisfaction_score, replace
-    destring hospital_id, replace
-    destring month, replace
-
-    gen proc = 0
-    replace proc = 1 if procedure == "New"
-    label define procedure 0 "Old" 1 "New"
-    drop procedure
-    rename proc procedure
-    label value procedure procedure
-    ''', quietly=True)
-
-# Run Stata commands in Python
-stata.run('''
-        didregress (satisfaction_score) (procedure), ///
-                group(hospital_id) time(month)
-        ''', echo=True)
-
-# Load Stata saved results to Python
-r = stata.get_return()['r(table)']
-
-# Use them in Python
-print("\n")
-print("The treatment hospitals had a %5.2f-point increase." % (r[0][0]), end=" ")
-print("The result is with 95%% confidence interval [%5.2f, %5.2f]." % (r[4][0], r[5][0]))
-
-# Generate Stata graph in Python
-stata.run("estat trendplots", echo=True)
-stata.run("graph export did.svg, replace", quietly=True)
-~~~
-
-[Output](./spyder_stata.html) produced from did.py in Spyder.
+- Call Stata using pystata API
+- [An example](./src/did.py)
+- [Output](./spyder_stata.html) produced from did.py
+- More information at [https://www.stata.com/python/pystata/api.html](https://www.stata.com/python/pystata/api.html)
 
 # Call Python from Stata
 
@@ -180,85 +131,6 @@ end
 
 
 # Support Vector Machine (SVM)
-
-## **pysvm** ([ado file](./stata/pysvm.ado))
-
-~~~~
-program pysvm
-	version 16
-	syntax varlist, predict(name)
-	gettoken label feature : varlist
-	python: dosvm("`label'", "`feature'", "`predict'")
-end
-~~~~
-
-## Python routine in [ado file](./stata/pysvm.ado)
-
-~~~~
-python:
-from sfi import Data
-import numpy as np
-from sklearn.svm import SVC
-
-def dosvm(label, features, predict):
-	X = np.array(Data.get(features))
-	y = np.array(Data.get(label))
-
-	svc_clf = SVC(gamma='auto')
-	svc_clf.fit(X, y)
-
-	y_pred = svc_clf.predict(X)
-
-	Data.addVarByte(predict)
-	Data.store(predict, None, y_pred)
-
-end
-~~~~
-
-## Test on **auto** dataset
-
-<<dd_do: quietly>>
-adopath + ./stata
-<</dd_do>>
-
-~~~~
-<<dd_do>>
-sysuse auto
-pysvm foreign mpg price, predict(for2)
-<</dd_do>>
-~~~~
-
-## Compare
-
-~~~~
-<<dd_do>>
-label values for2 origin
-tabulate foreign for2, nokey
-<</dd_do>>
-~~~~
-
-## Upgrade 
-
-<<dd_do: quietly>>
-sysuse auto, clear
-set seed 12345
-<</dd_do>>
-
-~~~~
-<<dd_do>>
-pysvm2 foreign mpg price if runiform() <= 0.2
-pysvm2predict for2
-<</dd_do>>
-~~~~
-
-## Output
-
-~~~~
-<<dd_do>>
-label values for2 origin
-tabulate foreign for2, nokey
-<</dd_do>>
-~~~~
 
 ## Train program ([pysvm2.ado](./stata/pysvm2.ado))
 
@@ -382,9 +254,33 @@ from __main__ import svc_clf
 ...
 ~~~~
 
+## Test on **auto** dataset
+
+<<dd_do: quietly>>
+adopath + ./stata
+sysuse auto, clear
+set seed 12345
+<</dd_do>>
+
+~~~~
+<<dd_do>>
+pysvm2 foreign mpg price if runiform() <= 0.2
+pysvm2predict for2
+<</dd_do>>
+~~~~
+
+## Output
+
+~~~~
+<<dd_do>>
+label values for2 origin
+tabulate foreign for2, nokey
+<</dd_do>>
+~~~~
+
 # Thanks!
 
-![Comments:hpeng@stata.com](words.png "words.png")
+![Comments:hpeng@stata.com](./src/words.png "words.png")
 
 # Post-credits...
 

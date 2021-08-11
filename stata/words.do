@@ -8,7 +8,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-url = "https://www.stata.com/new-in-stata/python-integration/"    
+url = "https://www.stata.com/new-in-stata/jupyter-notebooks/"    
 html = requests.get(url)  
 text = BeautifulSoup(html.text).get_text() 
 print(text)
@@ -23,7 +23,7 @@ if Platform.isWindows():
 	matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 
-plt.imshow(wordcloud, interpolation='bilinear')
+plt.imshow(wordcloud)
 plt.axis("off")
 plt.savefig("words.png")
 
