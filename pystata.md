@@ -13,7 +13,7 @@
 # Stata 17 introduces calling Stata from Python
 
 - Use Stata from Jupyter Notebook with magic commands
-- Use Stata from Python scripts with Stata API   
+- Use Stata from Python scripts with pystata API   
 - More information at [https://www.stata.com/python/pystata/](https://www.stata.com/python/pystata/)
 
 # Call Stata from Jupyter Notebook

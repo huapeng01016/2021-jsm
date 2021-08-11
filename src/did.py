@@ -1,3 +1,17 @@
+# A health provider is interested in studying the effect 
+# of a new hospital admissions procedure on patient satisfaction. 
+# They have monthly data on patients before and after the new 
+# procedure was implemented in some of their hospitals. The data 
+# are in nested JSON format, and the health provider uses Python 
+# as the data analysis tool. But they would like to use Stata's 
+# new DID regression to analyze the effect of the new admissions 
+# procedure on the hospitals that participated in the program. 
+# The outcome of interest is patient satisfaction, satisfaction_score, 
+# and the treatment variable is procedure.
+# The data can be found at 
+# https://www.stata.com/new-in-stata/pystata/did.json
+
+
 # Setup Stata from within Python
 import stata_setup
 stata_setup.config("C:/Program Files/Stata17", "mp")
